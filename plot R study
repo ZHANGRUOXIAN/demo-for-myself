@@ -11,3 +11,4 @@ plot(d) # 绘制结果
 
 # 长形数据 -> 宽型数据
 stu<-data.frame(grade=c("A","B","C","D","E"), female=c(5, 4, 1, 2, 3), male=c(1, 2, 3, 4, 5))
+gather(stu, gender, count,-grade)
