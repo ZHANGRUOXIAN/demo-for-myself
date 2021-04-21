@@ -1,0 +1,10 @@
+# hist图、正态分布图、密度曲线
+x <- mtcars$mpg ##将mtcars的变量mpg赋值给变量x
+h<-hist(x, breaks=10, col="red", xlab="Miles Per Gallon", main="Histogram with Normal Curve") ##xlab参数用来设置X轴标签，main参数用来设置图片的主标题
+xfit<-seq(min(x),max(x),length=40) ##生成从X的最小值到最大值的等间距的40个数
+yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) ##使用dnorm()函数生成服从正态分布的概率密度函数值
+yfit <- yfit*diff(h$mids[1:2])*length(x) ##在这里diff()函数是计算两数之差，也即直方图的组距；这一行是计算出模拟的Y值，为后续绘图做准备。
+lines(xfit, yfit, col="blue", lwd=2) ##绘制密度图形，lwd指的是线宽。
+# Kernel 密度图
+d <- density(mtcars$mpg) # density()函数获取概率密度数据
+plot(d) # 绘制结果
