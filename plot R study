@@ -8,3 +8,6 @@ lines(xfit, yfit, col="blue", lwd=2) ##绘制密度图形，lwd指的是线宽�
 # Kernel 密度图
 d <- density(mtcars$mpg) # density()函数获取概率密度数据
 plot(d) # 绘制结果
+
+# 长形数据 -> 宽型数据
+stu<-data.frame(grade=c("A","B","C","D","E"), female=c(5, 4, 1, 2, 3), male=c(1, 2, 3, 4, 5))
