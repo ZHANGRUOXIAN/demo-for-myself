@@ -1,4 +1,4 @@
-ls = [42,0,3,0,0,1,5]  # 0 -> na 同样的数排序一样
+ls = [42,0,3,0,0,1,5]  # 巨tm奇怪的排序问题，0 -> ‘NAN’；此外，同样的数排序一样，不改变位置。
 idx_0 = [i for i,x in enumerate(ls) if x==0]
 Set = set(ls)
 LS = list(Set)
