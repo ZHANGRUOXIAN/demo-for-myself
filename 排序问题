@@ -1,4 +1,4 @@
-ls = [42,0,3,0,0,1,5]
+ls = [42,0,3,0,0,1,5]  # 0 -> na 同样的数排序一样
 idx_0 = [i for i,x in enumerate(ls) if x==0]
 Set = set(ls)
 LS = list(Set)
