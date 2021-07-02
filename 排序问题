@@ -1,0 +1,15 @@
+ls = [42,0,3,0,0,1,5]
+idx_0 = [i for i,x in enumerate(ls) if x==0]
+Set = set(ls)
+LS = list(Set)
+LS.remove(0)
+LS.sort()
+index_ls = []
+for i in LS:
+    index_ls.append(LS.index(i) + 1)
+for i in range(len(ls)):
+    if ls[i] != 0:
+        ls[i] = LS.index(ls[i]) + 1
+for i in idx_0:
+    ls[i] = 'Nan'
+print(ls)
