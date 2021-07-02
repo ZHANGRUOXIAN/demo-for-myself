@@ -1,0 +1,29 @@
+# [4,5,3,12,6,6,6,0,0,0] -> [2,3,1,5,4,4,4,NA,NA,NA]
+# 巨tm奇怪的排序问题，0 -> ‘NA’；此外，同样的数排序一样，不改变位置，更大一个数+1
+
+ls = [42,0,3,0,0,1,5]  
+ordernewway1(ls)
+def ordernewway1(ls):
+    idx_0 = [i for i,x in enumerate(ls) if x==0]
+    Set = set(ls)
+    LS = list(Set)
+    try: #没0跳过
+        LS.remove(0) 
+    except:
+        pass
+    LS.sort()
+    index_ls = []
+
+    for i in LS:
+        index_ls.append(LS.index(i) + 1)
+    for i in range(len(ls)):
+        if ls[i] != 0:
+            ls[i] = LS.index(ls[i]) + 1
+    for i in idx_0:
+        ls[i] = 'NA'
+    ls = ls
+    return ls
+
+
+# [4,5,3,12,6,6,6,0,0,0] -> [2,3,1,6,4,4,4,NA,NA,NA]
+# 0 -> ‘NA’；同样的数排序一样，不改变位置。更大一个数要在前面的基础上加小一个数的个数
