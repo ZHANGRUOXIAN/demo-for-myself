@@ -1,0 +1,71 @@
+import numpy as np
+import pandas as pd
+import math
+
+LRinit_exp = [85.2,85.7,89.4]
+LRinit_SP = [0.938,0.816,0.903]
+LRinit_SE = [0.821,0.944,0.921]
+LRinit_AUC = [0.935,0.936,0.952]
+LR_exp = [85.799,78.571,89.404]
+LR_SP = [0.832,0.868,0.903]
+LR_SE = [0.893,1,0.921]
+LR_AUC = [0.928,0.949,0.952]
+NE_exp = [85.799,85.714,90.728]
+NE_SP = [0.858,0.947,0.982]
+NE_SE = [0.857,0.833,0.868]
+NE_AUC = [0.926,0.939,0.961]
+SVM_exp = [85.799,69.643,82.781]
+SVM_SP = [0.805,0.947,0.796]
+SVM_SE = [0.911,0.889,0.895]
+SVM_AUC = [0.928,0.940,0.892]
+
+def entropy_evaluation_method(matx):
+    k = 1 / math.log(matx.shape[0])
+    ls = []
+    for i in range(matx.shape[1]):
+        Min = np.min(matx[:,i])
+        Max = np.max(matx[:,i])
+        ls1 = []
+        ls2 = []
+        for j in range(matx.shape[0]):
+            xij = (matx[j][i] - Min) / (Max - Min)
+            ls2.append(xij)
+        S = sum(ls2)
+        for j in range(matx.shape[0]):
+            xij = (matx[j][i] - Min) / (Max - Min)
+            Pij = xij / S
+            if Pij == 0:
+                ls1.append(0)
+            else:
+                ls1.append(Pij * math.log(Pij) * (-k))
+        ls.append(1 - sum(ls1))
+    ls3 = []
+    for k in ls:
+        w = k / sum(ls)
+        ls3.append(w)
+    matrix_w = np.array(ls3)
+    matrix_score = np.dot(matx,np.array(matrix_w))
+    return np.round(matrix_w,4),np.round(matrix_score,4)
+# data1 = pd.DataFrame(np.arange(30).reshape(5,6),index = ('a','b','c','d','e'),columns=list('123456'))
+# matrix1 = data1.iloc[:,:].values
+# res1 = entropy_evaluation_method(matrix1)
+# print('各项指标权重向量：',res1[0])
+# print('各项方法最终得分：',res1[1])
+
+ls_col = ['CA','SP','SE','AUC']
+ls_modelname = ['LRT','MNN','LRW','SVM']
+data2 = pd.DataFrame([[np.array(LR_exp).mean(),np.array(LR_SP).mean(),np.array(LR_SE).mean(),np.array(LR_AUC).mean()],
+                     [np.array(NE_exp).mean(),np.array(NE_SP).mean(),np.array(NE_SE).mean(),np.array(NE_AUC).mean()],
+                      [np.array(LRinit_exp).mean(),np.array(LRinit_SP).mean(),np.array(LRinit_SE).mean(),np.array(LRinit_AUC).mean()],
+                      [np.array(SVM_exp).mean(),np.array(SVM_SP).mean(),np.array(SVM_SE).mean(),np.array(SVM_AUC).mean()]],index=ls_modelname,
+                     columns=ls_col)
+print('\033[1;31m{0:*^80}\033[1;0m'.format('指标数据均值后数据框图'))
+print(data2)
+matrix2 = data2.iloc[:,:].values
+res2 = entropy_evaluation_method(matrix2)
+
+print('\033[1;32m{0:*^80}\033[1;0m'.format('基于决策模型后的结果如下'))
+dic1 = zip(ls_col,res2[0])
+dic2 = zip(ls_modelname,res2[1])
+print('各项指标权重向量：',dict(dic1))
+print('各项方法最终得分：',dict(dic2))
